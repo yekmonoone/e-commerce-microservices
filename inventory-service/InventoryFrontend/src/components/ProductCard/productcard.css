@@ -1,0 +1,51 @@
+.product-card {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 20px;
+  width: 200px;
+  text-align: center;
+}
+
+
+.product-card button {
+  margin: 5px;
+  padding: 10px;
+  font-size: 14px;
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+  color: white;
+}
+
+.product-card button:nth-child(1) {
+  background-color: #007BFF;
+}
+
+.product-card button:nth-child(2) {
+  background-color: #DC3545;
+}
+
+.stock-status {
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.in-stock {
+  color: green;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.out-of-stock {
+  color: red;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.checking-stock {
+  color: gray;
+}
