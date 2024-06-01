@@ -7,6 +7,7 @@ import com.group3.productservice.service.dto.response.GetProductByIdResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -26,6 +27,10 @@ public class ProductController {
     @PostMapping("/addProduct")
     public void addProduct(@RequestBody AddProductRequest addProductRequest){
         productService.addProduct(addProductRequest);
+    }
+    @GetMapping("/getAll")
+    public List<GetProductByIdResponse> getAllProduct(){
+        return  productService.getAll();
     }
 
     @PutMapping("/updateProduct")

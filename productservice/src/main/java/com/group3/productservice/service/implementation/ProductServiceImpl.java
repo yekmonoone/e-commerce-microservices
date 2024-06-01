@@ -9,6 +9,7 @@ import com.group3.productservice.service.mapper.ProductMapperImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -48,6 +49,12 @@ public class ProductServiceImpl implements ProductService {
     public double getProductPriceById(int productId) {
         Product product=productRepository.findById(productId).orElseThrow();
         return product.getPrice();
+    }
+
+    @Override
+    public List<GetProductByIdResponse> getAll() {
+        List<Product> products=productRepository.findAll();
+        return ProductMapper.INSTANCE.getProductListResponseFromProductList(products);
     }
 
 }

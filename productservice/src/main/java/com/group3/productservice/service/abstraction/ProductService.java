@@ -4,6 +4,7 @@ import com.group3.productservice.entity.Product;
 import com.group3.productservice.service.dto.request.AddProductRequest;
 import com.group3.productservice.service.dto.response.GetProductByIdResponse;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface ProductService {
@@ -15,4 +16,5 @@ public interface ProductService {
 
     double getProductPriceById(int productId);
 
+    List<GetProductByIdResponse> getAll();
 }
