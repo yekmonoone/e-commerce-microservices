@@ -7,11 +7,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
-public class GetOrderItemResponse {
-    private int productId;
-    private String productName;
-    private int quantity;
+@NoArgsConstructor
+public class GetProductByIdResponse {
+    private String name;
+    private String description;
     private double price;
 }

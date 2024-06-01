@@ -9,7 +9,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class SearchProductRequest {
-    private String productOfferId;
-    private String productOfferName;
+public class AddProductRequest {
+    private String name;
+    private String description;
+    private double price;
 }

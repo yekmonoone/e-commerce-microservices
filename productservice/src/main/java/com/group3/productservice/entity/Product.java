@@ -15,14 +15,14 @@ public class Product {
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Column(name = "product_offer_name")
-    private String productName;
+    @Column(name = "name")
+    private String name;
 
-    @Column(name = "product_price")
-    private double productPrice;
+    @Column(name = "price")
+    private double price;
 
-    @Column(name = "product_description")
-    private String productDescription;
+    @Column(name = "description")
+    private String description;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "catalogue_id")

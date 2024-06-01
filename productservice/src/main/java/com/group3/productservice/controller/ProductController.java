@@ -2,6 +2,8 @@ package com.group3.productservice.controller;
 
 import com.group3.productservice.entity.Product;
 import com.group3.productservice.service.abstraction.ProductService;
+import com.group3.productservice.service.dto.request.AddProductRequest;
+import com.group3.productservice.service.dto.response.GetProductByIdResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +16,7 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping("/{productId}")
-    public Optional<Product> getProductById(@PathVariable int productId) {
+    public GetProductByIdResponse getProductById(@PathVariable int productId) {
         return productService.getProductById(productId);
     }
     @GetMapping("/price/{productId}")
@@ -22,8 +24,8 @@ public class ProductController {
         return productService.getProductPriceById(productId);
     }
     @PostMapping("/addProduct")
-    public void addProduct(@RequestBody Product product){
-        productService.addProduct(product);
+    public void addProduct(@RequestBody AddProductRequest addProductRequest){
+        productService.addProduct(addProductRequest);
     }
 
     @PutMapping("/updateProduct")

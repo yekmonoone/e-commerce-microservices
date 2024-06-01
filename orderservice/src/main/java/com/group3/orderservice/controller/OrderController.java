@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class OrderController {
     private final OrderService orderService;
-    @GetMapping("getAccountNumberByOrderId")
-    public String getAccountNumberByOrderId(@RequestParam String orderId) {
+    @GetMapping("getUserIdByOrderId/{orderId}")
+    public String getUserIdByOrderId(@PathVariable String orderId) {
         return orderService.getUserIdByOrderId(orderId);
     }
     @PostMapping("/placeOrder")
