@@ -80,5 +80,11 @@ public class OrderServiceImpl implements OrderService {
         return getOrderByIdResponse;
     }
 
+    @Override
+    public String getStatus(String orderId) {
+        Order order =orderRepository.findById(orderId).orElseThrow();
+        return order.getStatus();
+    }
+
 
 }

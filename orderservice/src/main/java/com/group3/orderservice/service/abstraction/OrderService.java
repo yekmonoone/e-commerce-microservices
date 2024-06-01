@@ -14,6 +14,7 @@ public interface OrderService {
     List<GetOrderByIdResponse> findOrdersByUserId(String userId);
 
     GetOrderByIdResponse getOrderById(String orderId);
+    String getStatus(String orderId);
 
 
 }
