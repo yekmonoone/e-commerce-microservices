@@ -17,4 +17,5 @@ public interface ProductService {
     double getProductPriceById(int productId);
 
     List<GetProductByIdResponse> getAll();
+    boolean checkProductExists(int productId);
 }

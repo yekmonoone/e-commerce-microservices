@@ -5,12 +5,10 @@ import com.group3.productservice.service.abstraction.ProductService;
 import com.group3.productservice.service.dto.request.AddProductRequest;
 import com.group3.productservice.service.dto.response.GetProductByIdResponse;
 import com.group3.productservice.service.mapper.ProductMapper;
-import com.group3.productservice.service.mapper.ProductMapperImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 
 @Service
@@ -55,6 +53,11 @@ public class ProductServiceImpl implements ProductService {
     public List<GetProductByIdResponse> getAll() {
         List<Product> products=productRepository.findAll();
         return ProductMapper.INSTANCE.getProductListResponseFromProductList(products);
+    }
+
+    @Override
+    public boolean checkProductExists(int productId) {
+        return productRepository.existsById(productId);
     }
 
 }

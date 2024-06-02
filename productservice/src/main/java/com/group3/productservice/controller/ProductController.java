@@ -32,6 +32,10 @@ public class ProductController {
     public List<GetProductByIdResponse> getAllProduct(){
         return  productService.getAll();
     }
+    @GetMapping("checkProductExists/{productId}")
+    public boolean checkProductExists(@PathVariable("productId") int productId){
+        return productService.checkProductExists(productId);
+    }
 
     @PutMapping("/updateProduct")
     public Product updateProduct(Product product){
