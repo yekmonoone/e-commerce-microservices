@@ -11,5 +11,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class AddOrderItemRequest {
     private int productId;
+    private int quantity;
 
 }

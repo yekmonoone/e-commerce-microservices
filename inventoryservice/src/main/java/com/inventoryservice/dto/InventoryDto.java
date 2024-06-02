@@ -1,4 +1,4 @@
-package com.group3.orderservice.service.response;
+package com.inventoryservice.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,9 +9,9 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class GetOrderItemResponse {
+public class InventoryDto {
+
+    private Long id;
     private int productId;
-    private String productName;
-    private int quantity;
-    private double price;
+    private int stockQuantity;
 }

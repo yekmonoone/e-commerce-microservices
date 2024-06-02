@@ -2,10 +2,13 @@ package com.group3.productservice.service.implementation;
 import com.group3.productservice.entity.Product;
 import com.group3.productservice.repository.ProductRepository;
 import com.group3.productservice.service.abstraction.ProductService;
+import com.group3.productservice.service.dto.request.AddProductRequest;
+import com.group3.productservice.service.dto.response.GetProductByIdResponse;
+import com.group3.productservice.service.mapper.ProductMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.List;
 
 
 @Service
@@ -17,13 +20,16 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public void addProduct(Product product) {
+    public void addProduct(AddProductRequest addProductRequest) {
+        Product product=ProductMapper.INSTANCE.productFromAddRequestToProduct(addProductRequest);
+
         productRepository.save(product);
     }
 
     @Override
-    public Optional<Product> getProductById(int productId) {
-        return productRepository.findById(productId);
+    public GetProductByIdResponse getProductById(int productId) {
+        Product product=productRepository.findById(productId).orElse(null);
+        return ProductMapper.INSTANCE.productFromGetProduct(product);
     }
 
     @Override
@@ -40,7 +46,18 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public double getProductPriceById(int productId) {
         Product product=productRepository.findById(productId).orElseThrow();
-        return product.getProductPrice();
+        return product.getPrice();
+    }
+
+    @Override
+    public List<GetProductByIdResponse> getAll() {
+        List<Product> products=productRepository.findAll();
+        return ProductMapper.INSTANCE.getProductListResponseFromProductList(products);
+    }
+
+    @Override
+    public boolean checkProductExists(int productId) {
+        return productRepository.existsById(productId);
     }
 
 }
