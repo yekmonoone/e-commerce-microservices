@@ -7,7 +7,9 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class GetProductByIdResponse {
+    private int id;
     private String name;
     private String description;
     private double price;
+
 }
