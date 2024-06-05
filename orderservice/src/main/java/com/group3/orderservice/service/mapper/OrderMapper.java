@@ -32,7 +32,6 @@ public interface OrderMapper {
             @Mapping(source = "orderItems", target = "items")
     })
     Order getOrderFromAddRequest(PlaceOrderRequest request);
-
     OrderItem getOrderItemFromAddRequest(AddOrderItemRequest item);
 
 

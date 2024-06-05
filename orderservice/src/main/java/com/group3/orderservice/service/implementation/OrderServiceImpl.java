@@ -10,6 +10,7 @@ import com.group3.orderservice.service.mapper.OrderMapper;
 import com.group3.orderservice.service.request.PlaceOrderRequest;
 import com.group3.orderservice.service.response.GetOrderByIdResponse;
 import com.group3.orderservice.service.response.GetOrderItemResponse;
+import com.group3.orderservice.service.response.GetProductByIdResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -37,8 +38,11 @@ public class OrderServiceImpl implements OrderService {
 
         List<OrderItem> orderItems = request.getOrderItems().stream().map(item -> {
             OrderItem orderItem = OrderMapper.INSTANCE.getOrderItemFromAddRequest(item);
-            double price = productServiceClient.getProductPriceById(item.getProductId());
-            orderItem.setPrice(price);
+            GetProductByIdResponse getProductByIdResponse = productServiceClient.getProductById(item.getProductId());
+
+            orderItem.setPrice(getProductByIdResponse.getPrice());
+            orderItem.setProductName(getProductByIdResponse.getName());
+            orderItem.setProductDescription(getProductByIdResponse.getDescription());
             return orderItem;
         }).collect(Collectors.toList());
 
@@ -74,6 +78,12 @@ public class OrderServiceImpl implements OrderService {
         List<GetOrderItemResponse> getOrderItemResponses = OrderMapper.INSTANCE.getOrderItemListResponseFromOrderItem(order.getItems());
         getOrderByIdResponse.setOrderItems(getOrderItemResponses);
         return getOrderByIdResponse;
+    }
+
+    @Override
+    public String getStatus(String orderId) {
+        Order order =orderRepository.findById(orderId).orElseThrow();
+        return order.getStatus();
     }
 
 

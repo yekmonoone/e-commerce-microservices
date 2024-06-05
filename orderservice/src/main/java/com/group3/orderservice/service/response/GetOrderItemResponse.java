@@ -12,5 +12,6 @@ import lombok.Setter;
 public class GetOrderItemResponse {
     private int productId;
     private String productName;
+    private int quantity;
     private double price;
 }
