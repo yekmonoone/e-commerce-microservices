@@ -29,33 +29,12 @@ public class NotificationController {
     }
 
 
-    @GetMapping("/{id}")
-    public ResponseEntity<GetUserNotificationResponse> getNotifications(
-            @PathVariable Long userId,
-            @RequestParam(required = false) String status) {
-
-        GetUserNotificationRequest request = new GetUserNotificationRequest();
-        request.setUserId(userId);
-        request.setStatus(status);
-
-        List<Notification> notifications = notificationService.getNotifications(request);
-        GetUserNotificationResponse response = new GetUserNotificationResponse();
-        response.setNotifications(notifications);
-
-        return ResponseEntity.ok(response);
-    }
-
     @GetMapping("/user/{id}")
     public ResponseEntity<Notification> getNotificationById(@PathVariable Long id) {
         Optional<Notification> notification = notificationService.getNotificationById(id);
         return notification.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @PostMapping
-    public ResponseEntity<Notification> createNotification(@RequestBody Notification notification) {
-        Notification createdNotification = notificationService.createNotification(notification);
-        return ResponseEntity.ok(createdNotification);
-    }
 
     @PutMapping("/{id}")
     public ResponseEntity<Notification> updateNotification(@PathVariable Long id, @RequestBody Notification notification) {
