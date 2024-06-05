@@ -9,6 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="inventoryservice" />
         <module name="discoveryserver" />
+        <module name="cartservice" />
       </profile>
       <profile name="Annotation profile for productservice" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
@@ -27,6 +28,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="cartservice" options="-parameters" />
       <module name="discoveryserver" options="-parameters" />
       <module name="inventoryservice" options="-parameters" />
       <module name="orderservice" options="-parameters" />

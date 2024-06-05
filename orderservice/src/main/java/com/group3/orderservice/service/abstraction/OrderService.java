@@ -7,11 +7,10 @@ import com.group3.orderservice.service.response.GetOrderByIdResponse;
 import java.util.List;
 
 public interface OrderService {
-    String getUserIdByOrderId(String orderId);
 
     String placeOrder(PlaceOrderRequest request);
 
-    List<GetOrderByIdResponse> findOrdersByUserId(String userId);
+    List<GetOrderByIdResponse> findOrdersByUserId(int userId);
 
     GetOrderByIdResponse getOrderById(String orderId);
     String getStatus(String orderId);

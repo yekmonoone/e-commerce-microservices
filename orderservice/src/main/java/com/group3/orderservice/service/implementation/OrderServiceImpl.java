@@ -14,6 +14,7 @@ import com.group3.orderservice.service.response.GetProductByIdResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,12 +25,6 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final ProductServiceClient productServiceClient;
 
-
-    @Override
-    public String getUserIdByOrderId(String orderId) {
-        Order order =orderRepository.findById(orderId).orElseThrow();
-        return order.getUserId();
-    }
 
     @Override
     public String placeOrder(PlaceOrderRequest request) {
@@ -45,15 +40,16 @@ public class OrderServiceImpl implements OrderService {
             orderItem.setProductDescription(getProductByIdResponse.getDescription());
             return orderItem;
         }).collect(Collectors.toList());
-
+        order.setStatus("Order Created");
         order.setItems(orderItems);
-        order.setTotalPrice(orderItems.stream().mapToDouble(OrderItem::getPrice).sum());
+        order.setOrderDate(LocalDate.now());
+        order.setTotalPrice(orderItems.stream().mapToDouble(item -> item.getPrice() * item.getQuantity()).sum());
         orderRepository.save(order);
         return order.getId();
     }
 
     @Override
-    public List<GetOrderByIdResponse> findOrdersByUserId(String userId) {
+    public List<GetOrderByIdResponse> findOrdersByUserId(int userId) {
 
         List<Order> orders = orderRepository.findByUserId(userId);
         List<GetOrderByIdResponse> orderByUserIdResponses = new ArrayList<>();

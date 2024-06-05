@@ -37,6 +37,45 @@ services:
     networks:
       - common
 
+  inventory-service:
+    build:
+      context: ./inventoryservice
+    ports:
+      - "8082:8082"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/inventory_service
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8888/eureka/
+    restart: on-failure
+    depends_on:
+      - postgres
+      - discovery-server
+    networks:
+      - common
+  cartservice:
+    build:
+      context: ./cartservice
+    ports:
+      - "8083:8083"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-container:3306/cart
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: ticketing
+    restart: on-failure
+    depends_on:
+      - mysql-container
+
+  mysql-container:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: ticketing
+      MYSQL_DATABASE: cart
+    ports:
+      - "3306:3306"
+    volumes:
+      - e-commerce-mysql-volume:/var/lib/mysql
+
+
+
   postgres:
     image: postgres:16.2-alpine
     ports:
@@ -66,6 +105,8 @@ volumes:
     name: e-commerce-postgres
   e-commerce-mongodb-volume:
     name: e-commerce-mongodb-volume
+  e-commerce-mysql-volume:
+    name: e-commerce-mysql
 
 networks:
   common:
