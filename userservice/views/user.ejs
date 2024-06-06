@@ -50,17 +50,20 @@
       <div class="orders">
         <h2>Önceki Siparişler</h2>
         <div id="order-list">
-          <% for(let i = 0;i< orders.length;i++) { %>
+          <% for(let i = 0; i < orders.length; i++) { %>
           <div class="list-item">
             <p><strong>Sipariş ID:</strong> <%= orders[i].id %></p>
-            <% for(let x = 0;x< orders[i].items.length;i++) { %>
+            <% if (orders[i].items) { %> <% for(let x = 0; x <
+            orders[i].items.length; x++) { %>
             <p>Ürün: <%= orders[i].items[x].productName %></p>
-            <p>Fiyat:<%= orders[i].items[x].price %></p>
+            <p>Fiyat: <%= orders[i].items[x].price %></p>
             <p>Adet: <%= orders[i].items[x].quantity %></p>
+            <% } %> <% } else { %>
+            <p>Ürün bilgisi bulunamadı.</p>
             <% } %>
-            <p><strong>Toplam Fiyat:</strong><%= orders[i].totalPrice %></p>
-            <p><strong>Tarih:</strong><%= orders[i].orderDate %></p>
-            <p><strong>Durum:</strong> <%= orders[i].status %></p>
+            <p><strong>Toplam Fiyat:</strong> <%= orders[i].totalPrice %></p>
+            <p><strong>Tarih:</strong> <%= orders[i].orderDate %></p>
+            <p><strong>Durum:</strong> <%= orders[i].orderStatus %></p>
           </div>
           <% } %>
         </div>
@@ -70,7 +73,7 @@
       <div class="notifications">
         <h2>Bildirimler</h2>
         <div id="notification-list">
-          <% for(let i = 0;i< notifications.length;i++) { %>
+          <% for(let i = 0; i < notifications.length; i++) { %>
           <div class="list-item">
             <p><strong>Mesaj:</strong> <%= notifications[i].message %></p>
             <p><strong>Tarih:</strong> 2024-01-01</p>
