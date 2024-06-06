@@ -31,12 +31,15 @@ public class ReviewService {
             reviewDTO.setComment(review.getComment());
 
             // User Service'ten kullanıcı adını alma
-            String userName = webClientBuilder.build()
+            Map<String, Object> userResponse = webClientBuilder.build()
                     .get()
                     .uri(USER_SERVICE_URL + review.getUserId())
                     .retrieve()
-                    .bodyToMono(String.class)
+                    .bodyToMono(new ParameterizedTypeReference<Map<String, Object>>() {})
                     .block();
+
+             String userName = (String) userResponse.get("username");
+
 
             reviewDTO.setUserName(userName);
             return reviewDTO;
