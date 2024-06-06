@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="form-container">
+        <h2>Register</h2>
+        <form id="registerForm" action="/register" method="POST">
+          <div class="input-group">
+            <label for="registerUsername">Username</label>
+            <input name="username" type="text" id="registerUsername" required />
+          </div>
+          <div class="input-group">
+            <label for="registerEmail">Email</label>
+            <input name="email" type="email" id="registerEmail" required />
+          </div>
+          <div class="input-group">
+            <label for="registerPassword">Password</label>
+            <input
+              name="password"
+              type="password"
+              id="registerPassword"
+              required
+            />
+          </div>
+          <div class="input-group">
+            <label for="registerConfirmPassword">Confirm Password</label>
+            <input
+              name="cpassword"
+              type="password"
+              id="registerConfirmPassword"
+              required
+            />
+          </div>
+          <button type="submit">Register</button>
+          <% if(typeof error != 'undefined') { %>
+
+          <div><%= error %></div>
+          <% } %>
+          <p>Already have an account? <a href="login.html">Login here</a></p>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
