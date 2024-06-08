@@ -77,6 +77,25 @@ services:
     depends_on:
       - mysql-container
 
+
+  payment-service:
+    build:
+      context: ./paymentService
+    ports:
+      - "8086:8086"
+    restart: on-failure
+  notification-service:
+    build:
+      context: ./notificationservice
+    ports:
+      - "8087:8087"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-container:3306/notificationdb
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: ticketing
+    restart: on-failure
+    depends_on:
+      - mysql-container
   userservice:
       build:
         context: ./userservice

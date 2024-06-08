@@ -11,4 +11,4 @@ COPY target/paymentService-0.0.1-SNAPSHOT.jar /app/paymentService.jar
 ENTRYPOINT ["java", "-jar", "/app/paymentService.jar"]
 
 # Uygulamanın çalışacağı portu belirt
-EXPOSE 8080
+EXPOSE 8086

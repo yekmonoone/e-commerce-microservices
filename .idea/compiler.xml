@@ -10,6 +10,8 @@
         <module name="inventoryservice" />
         <module name="discoveryserver" />
         <module name="reviewservice" />
+        <module name="paymentService" />
+        <module name="notificationservice" />
         <module name="cartservice" />
       </profile>
       <profile name="Annotation profile for productservice" enabled="true">
@@ -33,10 +35,12 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="cartservice" options="" />
+      <module name="cartservice" options="-parameters" />
       <module name="discoveryserver" options="-parameters" />
       <module name="inventoryservice" options="-parameters" />
+      <module name="notificationservice" options="-parameters" />
       <module name="orderservice" options="-parameters" />
+      <module name="paymentService" options="-parameters" />
       <module name="productservice" options="-parameters" />
       <module name="productservice (1)" options="-parameters" />
       <module name="reviewservice" options="-parameters" />
