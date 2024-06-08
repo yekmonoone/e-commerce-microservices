@@ -6,15 +6,13 @@ import com.group3.orderservice.service.response.GetOrderByIdResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/orders")
 @RequiredArgsConstructor
 public class OrderController {
     private final OrderService orderService;
-    @GetMapping("getUserIdByOrderId/{orderId}")
-    public String getUserIdByOrderId(@PathVariable String orderId) {
-        return orderService.getUserIdByOrderId(orderId);
-    }
     @PostMapping("/placeOrder")
     public String placeOrder(@RequestBody PlaceOrderRequest order) {
 
@@ -23,6 +21,11 @@ public class OrderController {
     @GetMapping("/{orderId}")
     public GetOrderByIdResponse getOrderById(@PathVariable String orderId) {
         return orderService.getOrderById(orderId);
+    }
+    @GetMapping("/getOrdersByUserId/{userId}")
+    public List<GetOrderByIdResponse> findOrdersByUserId(@PathVariable int userId){
+        return orderService.findOrdersByUserId(userId);
+
     }
     @GetMapping("/status/{orderId}")
     public String getStatus(@PathVariable String orderId) {

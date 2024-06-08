@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Profile</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+      }
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      .profile,
+      .notifications,
+      .orders {
+        margin-bottom: 40px;
+      }
+      h2 {
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 10px;
+      }
+      .list-item {
+        border-bottom: 1px solid #ddd;
+        padding: 10px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Kullanıcı Bilgileri -->
+      <div class="profile">
+        <h2>Kullanıcı Bilgileri</h2>
+        <p>
+          <strong>Ad:</strong> <span id="user-name"><%= user.username %></span>
+        </p>
+        <p>
+          <strong>Email:</strong> <span id="user-email"><%= user.email %></span>
+        </p>
+        <p>
+          <strong>Telefon:</strong> <span id="user-phone">123-456-7890</span>
+        </p>
+        <p><strong>Adres:</strong> <span id="user-address">xxx</span></p>
+      </div>
+
+      <!-- Siparişler -->
+      <div class="orders">
+        <h2>Önceki Siparişler</h2>
+        <div id="order-list">
+          <% for(let i = 0; i < orders.length; i++) { %>
+          <div class="list-item">
+            <p><strong>Sipariş ID:</strong> <%= orders[i].id %></p>
+            <% if (orders[i].items) { %> <% for(let x = 0; x <
+            orders[i].items.length; x++) { %>
+            <p>Ürün: <%= orders[i].items[x].productName %></p>
+            <p>Fiyat: <%= orders[i].items[x].price %></p>
+            <p>Adet: <%= orders[i].items[x].quantity %></p>
+            <% } %> <% } else { %>
+            <p>Ürün bilgisi bulunamadı.</p>
+            <% } %>
+            <p><strong>Toplam Fiyat:</strong> <%= orders[i].totalPrice %></p>
+            <p><strong>Tarih:</strong> <%= orders[i].orderDate %></p>
+            <p><strong>Durum:</strong> <%= orders[i].orderStatus %></p>
+          </div>
+          <% } %>
+        </div>
+      </div>
+
+      <!-- Bildirimler -->
+      <div class="notifications">
+        <h2>Bildirimler</h2>
+        <div id="notification-list">
+          <% for(let i = 0; i < notifications.length; i++) { %>
+          <div class="list-item">
+            <p><strong>Mesaj:</strong> <%= notifications[i].message %></p>
+            <p><strong>Tarih:</strong> 2024-01-01</p>
+          </div>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

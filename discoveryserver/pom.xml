@@ -8,7 +8,7 @@
 		<version>3.2.3</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.turkcell.pair1</groupId>
+	<groupId>com.group3</groupId>
 	<artifactId>discoveryserver</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>discoveryserver</name>

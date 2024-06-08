@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -21,10 +22,11 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void addProduct(AddProductRequest addProductRequest) {
-        Product product=ProductMapper.INSTANCE.productFromAddRequestToProduct(addProductRequest);
+        Product product = ProductMapper.INSTANCE.productFromAddRequestToProduct(addProductRequest);
 
         productRepository.save(product);
     }
+
 
     @Override
     public GetProductByIdResponse getProductById(int productId) {
@@ -34,8 +36,21 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product updateProduct(Product product) {
-        return productRepository.save(product);
+        Optional<Product> existingProduct = productRepository.findById(product.getId());
+        if (existingProduct.isPresent()) {
+            Product updatedProduct = existingProduct.get();
+            updatedProduct.setName(product.getName());
+            updatedProduct.setDescription(product.getDescription());
+            updatedProduct.setPrice(product.getPrice());
+            return productRepository.save(updatedProduct);
+        } else {
+            throw new RuntimeException("Product not found");
+        }
     }
+
+    /*public Product updateProduct(Product product) {
+        return productRepository.save(product);
+    }*/
 
     @Override
     public void deleteById(int productId) {

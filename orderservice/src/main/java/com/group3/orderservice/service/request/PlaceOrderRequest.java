@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PlaceOrderRequest {
-    private String userId;
+    private int userId;
     private List<AddOrderItemRequest> orderItems;
 
 

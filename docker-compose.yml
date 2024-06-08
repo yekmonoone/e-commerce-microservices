@@ -1,0 +1,113 @@
+services:
+  discovery-server:
+    build:
+      context: ./discoveryserver
+    ports:
+      - "8888:8888"
+    networks:
+      - common
+
+  order-service:
+    build:
+      context: ./orderservice
+    ports:
+      - "8081:8081"
+    environment:
+      - SPRING_DATA_MONGODB_URI=mongodb://root:root@mongodb:27017/order_service?authSource=admin
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8888/eureka/
+    restart: on-failure
+    depends_on:
+      - mongodb
+      - discovery-server
+    networks:
+      - common
+
+  product-service:
+    build:
+      context: ./productservice
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/product_service
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8888/eureka/
+    restart: on-failure
+    depends_on:
+      - postgres
+      - discovery-server
+    networks:
+      - common
+
+  inventory-service:
+    build:
+      context: ./inventoryservice
+    ports:
+      - "8082:8082"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/inventory_service
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8888/eureka/
+    restart: on-failure
+    depends_on:
+      - postgres
+      - discovery-server
+    networks:
+      - common
+  cartservice:
+    build:
+      context: ./cartservice
+    ports:
+      - "8083:8083"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-container:3306/cart
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: ticketing
+    restart: on-failure
+    depends_on:
+      - mysql-container
+
+  mysql-container:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: ticketing
+      MYSQL_DATABASE: cart
+    ports:
+      - "3306:3306"
+    volumes:
+      - e-commerce-mysql-volume:/var/lib/mysql
+
+
+
+  postgres:
+    image: postgres:16.2-alpine
+    ports:
+      - "5433:5432"
+    environment:
+      - POSTGRES_PASSWORD=test
+      - POSTGRES_USER=postgres
+    volumes:
+      - e-commerce-postgres-volume:/var/lib/postgresql/data
+    networks:
+      - common
+
+  mongodb:
+    image: mongo
+    ports:
+      - "27018:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
+    volumes:
+      - e-commerce-mongodb-volume:/data/db
+    networks:
+      - common
+
+volumes:
+  e-commerce-postgres-volume:
+    name: e-commerce-postgres
+  e-commerce-mongodb-volume:
+    name: e-commerce-mongodb-volume
+  e-commerce-mysql-volume:
+    name: e-commerce-mysql
+
+networks:
+  common:
+    driver: bridge

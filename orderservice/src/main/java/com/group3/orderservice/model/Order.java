@@ -4,6 +4,7 @@ import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @AllArgsConstructor
@@ -14,9 +15,10 @@ import java.util.List;
 public class Order {
     @Id
     private String id;
-    private String userId;
+    private int userId;
     private List<OrderItem> items;
-    private String status="Order Created";
+    private LocalDate orderDate;
+    private String status;
     private double totalPrice;
     //TODO:user service eklendikten sonra adress eklenicek
 
