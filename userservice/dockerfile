@@ -1,5 +1,5 @@
 # Use the official Node.js 16 image as the base
-FROM node:16
+FROM node:18
 
 # Set the working directory in the container
 WORKDIR /app
@@ -16,8 +16,5 @@ COPY . .
 # Expose the port the app runs on
 EXPOSE 3000
 
-# Define environment variable for the database password
-ENV DB_PASSWD=bbNs1QyBqy7Kzwn7
-ENV JWT_SECRET=mySecret
 # Start the application
 CMD ["node", "index.js"]
