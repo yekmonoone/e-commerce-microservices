@@ -4,25 +4,20 @@ import com.example.notificationservice.dto.NotificationRequest;
 import com.example.notificationservice.dto.NotificationResponse;
 import com.example.notificationservice.model.Notification;
 import com.example.notificationservice.repository.NotificationRepository;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.mail.*;
-import jakarta.mail.internet.InternetAddress;
-import jakarta.mail.internet.MimeBodyPart;
-import jakarta.mail.internet.MimeMessage;
-import jakarta.mail.internet.MimeMultipart;
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 
 @Service
@@ -31,9 +26,6 @@ public class NotificationServiceImpl implements NotificationService {
     @Autowired
     private NotificationRepository notificationRepository;
 
-
-    @Autowired
-    public JavaMailSender mailSender;
 
     @Autowired
     public WebClient.Builder webClientBuilder;
@@ -97,8 +89,42 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     public void sendEmail(String to, String message_content) throws MessagingException {
-        // TODO: Mail entegrasyonu yapılmalı
+        final String username = "ecommercemsproject@outlook.com";
+        final String password = "ecommerce2024";
+
+        Properties prop = new Properties();
+        prop.put("mail.smtp.host", "smtp.office365.com");
+        prop.put("mail.smtp.port", "587");
+        prop.put("mail.smtp.auth", "true");
+        prop.put("mail.smtp.starttls.enable", "true");
+
+        Session session = Session.getInstance(prop,
+                new javax.mail.Authenticator() {
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication(username, password);
+                    }
+                });
+
+        try {
+
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(username));
+            message.setRecipients(
+                    Message.RecipientType.TO,
+                    InternetAddress.parse(to)
+            );
+            message.setSubject("Testing Outlook SMTP");
+            message.setText(message_content);
+
+            Transport.send(message);
+
+            System.out.println("Mail sent successfully!");
+
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
     }
+
 
 
     @Override
@@ -112,4 +138,3 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
 }
-

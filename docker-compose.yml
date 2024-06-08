@@ -64,6 +64,19 @@ services:
     depends_on:
       - mysql-container
 
+  reviewservice:
+    build:
+      context: ./reviewservice
+    ports:
+      - "8085:8085"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-container:3306/reviewdb
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: ticketing
+    restart: on-failure
+    depends_on:
+      - mysql-container
+
   userservice:
       build:
         context: ./userservice

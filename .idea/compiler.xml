@@ -9,6 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="inventoryservice" />
         <module name="discoveryserver" />
+        <module name="reviewservice" />
         <module name="cartservice" />
       </profile>
       <profile name="Annotation profile for productservice" enabled="true">
@@ -22,8 +23,8 @@
           <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.5.5.Final/mapstruct-1.5.5.Final.jar" />
         </processorPath>
         <module name="productservice (1)" />
-        <module name="orderservice" />
         <module name="productservice" />
+        <module name="orderservice" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -36,8 +37,9 @@
       <module name="discoveryserver" options="-parameters" />
       <module name="inventoryservice" options="-parameters" />
       <module name="orderservice" options="-parameters" />
-      <module name="productservice" options="" />
+      <module name="productservice" options="-parameters" />
       <module name="productservice (1)" options="-parameters" />
+      <module name="reviewservice" options="-parameters" />
     </option>
   </component>
 </project>
