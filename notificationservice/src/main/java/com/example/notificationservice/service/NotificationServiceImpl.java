@@ -113,7 +113,7 @@ public class NotificationServiceImpl implements NotificationService {
                     Message.RecipientType.TO,
                     InternetAddress.parse(to)
             );
-            message.setSubject("Testing Outlook SMTP");
+            message.setSubject("Notification from E-Commerce Site");
             message.setText(message_content);
 
             Transport.send(message);
