@@ -1,8 +1,10 @@
 package com.example.paymentService.Model;
 
+import nonapi.io.github.classgraph.json.Id;
+
 public class Payment {
 	private String paymentId;
-	private String orderId;
+	private int userId;
 	private double amount;
 	private String status;
 	
@@ -18,12 +20,12 @@ public class Payment {
 		this.paymentId = paymentId;
 	}
 
-	public String getOrderId() {
-		return orderId;
+	public int getUserId() {
+		return userId;
 	}
 
-	public void setOrderId(String orderId) {
-		this.orderId = orderId;
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 
 	public double getAmount() {

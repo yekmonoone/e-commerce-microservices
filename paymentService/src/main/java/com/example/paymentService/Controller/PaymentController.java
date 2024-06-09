@@ -1,5 +1,6 @@
 package com.example.paymentService.Controller;
 
+import com.example.paymentService.Service.dto.request.AddPaymentRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
@@ -20,8 +21,8 @@ public class PaymentController {
     
     
     @PostMapping("/process")
-    public Payment makePayment(@RequestBody Payment payment) {
-        return paymentService.processPayment(payment);
+    public String makePayment(@RequestBody AddPaymentRequest addPaymentRequest) {
+        return paymentService.processPayment(addPaymentRequest);
     }
 
     @GetMapping("verify/{id}")
