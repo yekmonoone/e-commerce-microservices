@@ -104,8 +104,6 @@ services:
       environment:
         - DB_PASSWD=bbNs1QyBqy7Kzwn7
         - JWT_SECRET=mySecret
-      volumes:
-        - .:/usr/src/app
       depends_on:
         - mongo
 
@@ -146,11 +144,9 @@ services:
       - common
 
   mongo:
-    image: mongo:4.4
+    image: mongo
     ports:
-      - "27017:27018"
-    volumes:
-      - mongo-data:/data/db
+      - "27019:27019"
 volumes:
   e-commerce-postgres-volume:
     name: e-commerce-postgres
