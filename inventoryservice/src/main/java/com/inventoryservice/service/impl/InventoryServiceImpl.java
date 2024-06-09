@@ -78,7 +78,11 @@ public class InventoryServiceImpl implements InventoryService {
             throw new IllegalArgumentException("Stock quantity cannot be less than 0.");
         }
 
-        inventory.setStockQuantity(stockQuantity);
+        if (stockQuantity > inventory.getStockQuantity()) {
+            throw new IllegalArgumentException("Stock quantity cannot be more than existing stock");
+        }
+
+        inventory.setStockQuantity(inventory.getStockQuantity() - stockQuantity);
 
         Inventory updatedInventoryObj = inventoryRepository.save(inventory);
 

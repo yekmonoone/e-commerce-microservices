@@ -16,9 +16,8 @@ app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true })); //Body parser
 app.use("/user", userRoutes);
 
-const PORT = 3000;
+const PORT = 8084;
 const DB_URI = `mongodb+srv://jakerkane:${process.env.DB_PASSWD}@microcluster.mqyt4t2.mongodb.net/`;
-
 mongoose
   .connect(DB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
