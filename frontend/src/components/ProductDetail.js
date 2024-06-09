@@ -3,6 +3,8 @@ import { getProductById } from '../api/productService';
 import { useParams } from 'react-router-dom';
 import { Container, Card, ListGroup, ListGroupItem, Alert } from 'react-bootstrap';
 import '../index.css'; // Stil dosyasını import etme
+import AddReview from './AddReview'; // AddReview bileşenini import etme
+import ReviewList from './ReviewList'; // ReviewList bileşenini import etme
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -48,16 +50,8 @@ const ProductDetail = () => {
         </ListGroup>
         <Card.Body>
           <Card.Title>Reviews</Card.Title>
-          {/* Here you can map through the reviews and display them */}
-          {product.reviews && product.reviews.length > 0 ? (
-            product.reviews.map((review, index) => (
-              <Card.Text key={index}>
-                <strong>{review.username}:</strong> {review.comment}
-              </Card.Text>
-            ))
-          ) : (
-            <Card.Text>No reviews yet.</Card.Text>
-          )}
+          <ReviewList productId={id} />
+          <AddReview productId={id} /> 
         </Card.Body>
       </Card>
     </Container>
