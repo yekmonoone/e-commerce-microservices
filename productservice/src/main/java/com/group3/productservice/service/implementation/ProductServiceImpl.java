@@ -60,7 +60,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public double getProductPriceById(int productId) {
-        Product product=productRepository.findById(productId).orElseThrow();
+        Product product=productRepository.findById(productId).orElseThrow(()->new RuntimeException("hata"));
         return product.getPrice();
     }
 
