@@ -1,18 +1,11 @@
-package com.example.cartservice.dto;
+package com.example.paymentService.Service.dto.request;
 
-public class CartDTO {
+
+
+
+public class AddOrderItemRequest {
     private int productId;
     private int quantity;
-
-    public CartDTO() {
-    }
-
-    public CartDTO(int userId, int productId, int quantity) {
-        this.productId = productId;
-        this.quantity = quantity;
-    }
-
-    // Getters and setters
 
     public int getProductId() {
         return productId;
@@ -27,6 +20,11 @@ public class CartDTO {
     }
 
     public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public AddOrderItemRequest(int productId, int quantity) {
+        this.productId = productId;
         this.quantity = quantity;
     }
 }
