@@ -1,3 +1,5 @@
+
+# Use the official Node.js 16 image as the base
 FROM node:18
 
 # Create app directory
@@ -19,8 +21,5 @@ COPY . .
 EXPOSE 3000
 CMD ["npm","start"]
 
-# Define environment variable for the database password
-ENV DB_PASSWD=bbNs1QyBqy7Kzwn7
-ENV JWT_SECRET=mySecret
 # Start the application
 CMD ["node", "index.js"]

@@ -1,4 +1,4 @@
-version: '3.8'
+version: '3'
 
 services:
   user-service:
@@ -6,15 +6,13 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - PORT=3000
-      - JWT_SECRET=mySecret
-      - DB_HOST=mongo
-      - DB_PORT=27017
-      - DB_NAME=usersdb
-    depends_on:
-      - mongo
 
-  mongo:
-    image: mongo:4.4
+      DB_PASSWD: bbNs1QyBqy7Kzwn7
+      JWT_SECRET: mySecret
+    depends_on:
+      - mongodb
+
+  mongodb:
+    image: mongo
     ports:
       - "27017:27017"
