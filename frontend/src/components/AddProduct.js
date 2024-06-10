@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
-import { addProduct } from '../api/productService.js';  // API fonksiyonlarınızın olduğu dosyadan import ettiğiniz varsayılmaktadır.
+import { addProduct } from '/Users/damlakaratas/Desktop/ecommerce-microservice/e-commerce-microservices/frontend/src/api/productService.js';  // API fonksiyonlarınızın olduğu dosyadan import ettiğiniz varsayılmaktadır.
 
 function ProductForm() {
     const [product, setProduct] = useState({

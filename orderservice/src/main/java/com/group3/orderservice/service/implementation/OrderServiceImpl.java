@@ -69,7 +69,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public GetOrderByIdResponse getOrderById(String orderId) {
-        Order order =orderRepository.findById(orderId).orElseThrow(()->new RuntimeException("hata"));
+        Order order =orderRepository.findById(orderId).orElseThrow();
         GetOrderByIdResponse getOrderByIdResponse = OrderMapper.INSTANCE.getOrderByIdResponseFromOrder(order);
         List<GetOrderItemResponse> getOrderItemResponses = OrderMapper.INSTANCE.getOrderItemListResponseFromOrderItem(order.getItems());
         getOrderByIdResponse.setOrderItems(getOrderItemResponses);
@@ -78,7 +78,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public String getStatus(String orderId) {
-        Order order =orderRepository.findById(orderId).orElseThrow(()->new RuntimeException("hata"));
+        Order order =orderRepository.findById(orderId).orElseThrow();
         return order.getStatus();
     }
 
