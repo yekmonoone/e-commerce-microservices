@@ -101,7 +101,3 @@ If you wish to contribute, please follow these steps:
 This project is licensed under the [Apache License 2.0](LICENSE).
 
 ---
-
-## Contact
-
-For questions or suggestions about the project, you can reach out to [email@example.com](mailto:email@example.com).
