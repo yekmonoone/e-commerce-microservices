@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Service</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            margin-top: 2rem;
+        }
+
+        .order-info, .card-selection, .result {
+            margin-bottom: 1rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        select {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 0.5rem;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .result {
+            padding: 0.5rem;
+            border-radius: 4px;
+        }
+
+        .result.success {
+            background-color: #dff0d8;
+            color: #3c763d;
+        }
+
+        .result.failure {
+            background-color: #f2dede;
+            color: #a94442;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Payment Service</h1>
+        <div class="order-info">
+            <label><strong>Order ID:</strong></label> 
+            <span id="orderId">order123</span>
+            <br>
+            <label><strong>Amount:</strong></label> 
+            <span id="amount">$100</span>
+        </div>
+        <div class="card-selection">
+            <label for="cardSelect"><strong>Select a saved card:</strong></label>
+            <select id="cardSelect">
+                <option value="card1">Card 1: 4111 1111 1111 1111, Balance: $1000</option>
+                <option value="card2">Card 2: 5500 0000 0000 0004, Balance: $500</option>
+                <option value="card3">Card 3: 3400 0000 0000 0009, Balance: $300</option>
+            </select>
+            <button type="button" onclick="makePayment()">Pay</button>
+        </div>
+        <div id="result" class="result hidden"></div>
+    </div>
+    <script>
+        const cards = {
+            card1: { number: '4111111111111111', balance: 1000 },
+            card2: { number: '5500000000000004', balance: 500 },
+            card3: { number: '3400000000000009', balance: 300 }
+        };
+
+        const orderId = 'order123';  // Example order ID
+        const amount = 100;  // Example amount
+
+        document.getElementById('orderId').innerText = orderId;
+        document.getElementById('amount').innerText = `$${amount}`;
+
+        function makePayment() {
+            const selectedCard = document.getElementById('cardSelect').value;
+            const cardDetails = cards[selectedCard];
+
+            if (cardDetails.balance < amount) {
+                const resultDiv = document.getElementById('result');
+                resultDiv.classList.remove('hidden', 'success');
+                resultDiv.classList.add('failure');
+                resultDiv.innerText = 'Payment Failed: Insufficient balance.';
+                return;
+            }
+
+            const paymentData = {
+                orderId: orderId,
+                amount: amount,
+                cardNumber: cardDetails.number
+            };
+
+            fetch('http://localhost:8080/payment/process', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(paymentData)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
+                const resultDiv = document.getElementById('result');
+                resultDiv.classList.remove('hidden', 'failure');
+                resultDiv.classList.add('success');
+                resultDiv.innerText = 'Payment Successful: ' + JSON.stringify(data);
+
+                // Update card balance
+                cardDetails.balance -= amount;
+                updateCardOptions();
+            })
+            .catch(error => {
+                const resultDiv = document.getElementById('result');
+                resultDiv.classList.remove('hidden', 'success');
+                resultDiv.classList.add('failure');
+                resultDiv.innerText = 'Payment Failed: ' + error.message;
+            });
+        }
+
+        function updateCardOptions() {
+            document.getElementById('cardSelect').innerHTML = `
+                <option value="card1">Card 1: 4111 1111 1111 1111, Balance: $${cards.card1.balance}</option>
+                <option value="card2">Card 2: 5500 0000 0000 0004, Balance: $${cards.card2.balance}</option>
+                <option value="card3">Card 3: 3400 0000 0000 0009, Balance: $${cards.card3.balance}</option>
+            `;
+        }
+    </script>
+</body>
+</html>

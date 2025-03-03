@@ -1,7 +1,6 @@
 package com.example.cartservice.dto;
 
 public class CartDTO {
-    private int userId;
     private int productId;
     private int quantity;
 
@@ -9,19 +8,11 @@ public class CartDTO {
     }
 
     public CartDTO(int userId, int productId, int quantity) {
-        this.userId = userId;
         this.productId = productId;
         this.quantity = quantity;
     }
 
     // Getters and setters
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
 
     public int getProductId() {
         return productId;

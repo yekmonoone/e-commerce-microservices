@@ -64,6 +64,50 @@ services:
     depends_on:
       - mysql-container
 
+  reviewservice:
+    build:
+      context: ./reviewservice
+    ports:
+      - "8085:8085"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-container:3306/reviewdb
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: ticketing
+    restart: on-failure
+    depends_on:
+      - mysql-container
+
+
+  payment-service:
+    build:
+      context: ./paymentService
+    ports:
+      - "8086:8086"
+    restart: on-failure
+
+  notification-service:
+    build:
+      context: ./notificationservice
+    ports:
+      - "8087:8087"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-container:3306/notificationdb
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: ticketing
+    restart: on-failure
+    depends_on:
+      - mysql-container
+  userservice:
+      build:
+        context: ./userservice
+      ports:
+        - "8084:8084"
+      environment:
+        - DB_PASSWD=bbNs1QyBqy7Kzwn7
+        - JWT_SECRET=mySecret
+      depends_on:
+        - mongo
+
   mysql-container:
     image: mysql:8.0
     environment:
@@ -100,6 +144,10 @@ services:
     networks:
       - common
 
+  mongo:
+    image: mongo
+    ports:
+      - "27019:27019"
 volumes:
   e-commerce-postgres-volume:
     name: e-commerce-postgres
@@ -107,6 +155,8 @@ volumes:
     name: e-commerce-mongodb-volume
   e-commerce-mysql-volume:
     name: e-commerce-mysql
+  mongo-data:
+    name: mongo-data
 
 networks:
   common:
